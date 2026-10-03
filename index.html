@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crust & Cost — Bakery Recipe Costing, Pricing & Nutrition Calculator</title>
+  <meta name="description" content="Calculate accurate bakery recipe costs, portion pricing, profit margins, and nutritional labels in seconds. Built for home bakers, pastry chefs, and small food businesses.">
+  <meta name="keywords" content="bakery costing app, recipe cost calculator, bakery pricing, nutrition label generator, home baker profit margin">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Crust & Cost — Smart Bakery Recipe Costing">
+  <meta property="og:description" content="Stop guessing your baking costs. Accurate recipe costing, profit margins, and nutrition facts labels for bakers.">
+  <meta property="og:image" content="icon.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #9C4221;
+      --primary-dark: #7A3116;
+      --primary-light: #F4EDE8;
+      --accent: #E07A5F;
+      --accent-warm: #F4A261;
+      --bg: #FAF7F2;
+      --bg-card: #FFFFFF;
+      --text: #221518;
+      --text-muted: #6B5B53;
+      --border: #EDE5DC;
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 28px;
+      --shadow-sm: 0 4px 12px rgba(100, 50, 20, 0.05);
+      --shadow-md: 0 12px 32px rgba(100, 50, 20, 0.08);
+      --shadow-lg: 0 20px 48px rgba(100, 50, 20, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 247, 242, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(237, 229, 220, 0.7);
+      padding: 16px 0;
+      transition: all 0.3s ease;
+    }
+
+    .nav-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(156, 66, 33, 0.2);
+    }
+
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.45rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .brand-name span {
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+    }
+
+    .btn-nav-download {
+      background: var(--primary);
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(156, 66, 33, 0.25);
+    }
+
+    .btn-nav-download:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 70px 0 60px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-light);
+      border: 1px solid rgba(156, 66, 33, 0.15);
+      color: var(--primary);
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.4rem;
+      line-height: 1.15;
+      font-weight: 700;
+      color: var(--text);
+      max-width: 860px;
+      margin: 0 auto 20px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--primary);
+    }
+
+    .hero-subtitle {
+      font-size: 1.22rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    /* Store Download Buttons */
+    .store-cta-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 24px;
+      background: #111;
+      color: #fff;
+      border-radius: 14px;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+      border: 2px solid transparent;
+      min-width: 200px;
+    }
+
+    .store-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+    }
+
+    .store-btn.highlighted {
+      border-color: var(--accent-warm);
+      box-shadow: 0 0 0 3px rgba(244, 162, 97, 0.35), 0 10px 24px rgba(0,0,0,0.18);
+      position: relative;
+    }
+
+    .store-btn-icon {
+      width: 28px;
+      height: 28px;
+      fill: #fff;
+      flex-shrink: 0;
+    }
+
+    .store-btn-text {
+      text-align: left;
+      line-height: 1.2;
+    }
+
+    .store-btn-sub {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.85;
+      font-weight: 500;
+    }
+
+    .store-btn-main {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .trial-pill {
+      display: inline-block;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .trial-pill span {
+      color: #2E7D32;
+      font-weight: 700;
+    }
+
+    /* Device Preview Mockup */
+    .hero-mockup-wrapper {
+      margin-top: 48px;
+      position: relative;
+    }
+
+    .hero-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      text-align: left;
+    }
+
+    .hero-stat {
+      padding: 16px 20px;
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(237, 229, 220, 0.8);
+    }
+
+    .hero-stat-num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .hero-stat-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Features Section */
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 54px;
+    }
+
+    .section-tag {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 32px 28px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(156, 66, 33, 0.3);
+    }
+
+    .feature-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    .feature-icon-wrap svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-text {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Benefits Banner */
+    .banner {
+      background: linear-gradient(135deg, #2D1720 0%, #4A222C 100%);
+      color: #fff;
+      border-radius: var(--radius-lg);
+      padding: 60px 48px;
+      margin: 40px auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .banner-content {
+      max-width: 580px;
+    }
+
+    .banner-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.3rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .banner-desc {
+      font-size: 1.05rem;
+      opacity: 0.9;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    /* FAQ Section */
+    .faq-container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .faq-item details {
+      padding: 20px 24px;
+    }
+
+    .faq-item summary {
+      font-weight: 700;
+      font-size: 1.05rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text);
+      user-select: none;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--primary);
+      font-weight: 600;
+      transition: transform 0.2s ease;
+    }
+
+    .faq-item details[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      margin-top: 14px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+      background: #FFFFFF;
+      border-top: 1px solid var(--border);
+      padding: 50px 0 30px;
+      margin-top: 80px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-link {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-title {
+        font-size: 2.6rem;
+      }
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .hero-card {
+        grid-template-columns: 1fr;
+      }
+      .banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 24px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-title {
+        font-size: 2.1rem;
+      }
+      .hero-subtitle {
+        font-size: 1.05rem;
+      }
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .store-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .nav-links {
+        display: none;
+      }
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="container nav-content">
+      <a href="#" class="brand">
+        <img src="icon.png" alt="Crust & Cost Logo" class="brand-logo">
+        <span class="brand-name">Crust <span>&</span> Cost</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#how-it-works" class="nav-link">How It Works</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+        <a href="#download" class="btn-nav-download">Get the App</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="download">
+    <div class="container">
+      <div class="hero-badge">
+        <span>✨</span> The Smart Bakery Recipe Costing App
+      </div>
+      <h1 class="hero-title">
+        Cost Your Recipes with Confidence.<br>
+        <em>Price for Real Profit.</em>
+      </h1>
+      <p class="hero-subtitle">
+        Crust & Cost takes the guesswork out of baking finances. Calculate accurate portion costs, 
+        factor in packaging and electricity, set recommended retail markups, and generate compliant nutrition facts labels in seconds.
+      </p>
+
+      <!-- App Download Buttons -->
+      <div class="store-cta-group">
+        <!-- Google Play -->
+        <a href="https://play.google.com/store/apps/details?id=com.crustandcost.app" class="store-btn" id="btn-google-play" target="_blank" rel="noopener">
+          <svg class="store-btn-icon" viewBox="0 0 24 24">
+            <path d="M3.609 1.814L13.792 12 3.61 22.186a2.41 2.41 0 0 1-.61-.954V2.768c.15-.36.368-.69.61-.954zm11.24 11.24l2.124 2.124-11.7 6.64 9.576-8.764zm0-2.108L5.273 2.182l11.7 6.64-2.124 2.124zm1.488 1.488l2.946-1.672c.983-.558.983-1.468 0-2.026L16.337 9.8l-1.92 1.92 1.92 1.92z"/>
+          </svg>
+          <div class="store-btn-text">
+            <div class="store-btn-sub">Get it on</div>
+            <div class="store-btn-main">Google Play</div>
+          </div>
+        </a>
+
+        <!-- Apple App Store -->
+        <a href="https://apps.apple.com/app/id6817686861" class="store-btn" id="btn-apple-store" target="_blank" rel="noopener">
+          <svg class="store-btn-icon" viewBox="0 0 24 24">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.93-2.85-.9.04-1.99.6-2.64 1.35-.57.65-1.07 1.71-.93 2.73 1.01.08 2.03-.5 2.64-1.23z"/>
+          </svg>
+          <div class="store-btn-text">
+            <div class="store-btn-sub">Download on the</div>
+            <div class="store-btn-main">App Store</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="trial-pill">
+        <span>✓ 7-Day Free Trial</span> on all plans • Cancel anytime with one tap
+      </div>
+
+      <!-- Hero Summary Card -->
+      <div class="hero-mockup-wrapper">
+        <div class="hero-card">
+          <div class="hero-stat">
+            <div class="hero-stat-num">100%</div>
+            <div class="hero-stat-label">Accurate Portion & Batch Math</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">FDA / EU</div>
+            <div class="hero-stat-label">Compliant Nutrition Label Generation</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">Offline</div>
+            <div class="hero-stat-label">Works in Any Kitchen Without Wi-Fi</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Powerful Features</div>
+        <h2 class="section-title">Everything a Modern Baker Needs</h2>
+        <p class="section-desc">Designed by culinary professionals for bakers who care about precision, profitability, and presentation.</p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+              <line x1="8" y1="6" x2="16" y2="6"></line>
+              <line x1="16" y1="14" x2="16" y2="18"></line>
+              <path d="M16 10h.01"></path>
+              <path d="M12 10h.01"></path>
+              <path d="M8 10h.01"></path>
+              <path d="M12 14h.01"></path>
+              <path d="M8 14h.01"></path>
+              <path d="M12 18h.01"></path>
+              <path d="M8 18h.01"></path>
+            </svg>
+          </div>
+          <h3 class="feature-title">Precision Recipe Costing</h3>
+          <p class="feature-text">Break down ingredient costs per gram, milliliter, or cup. Include packaging boxes, ribbons, labels, and oven electricity per bake.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <h3 class="feature-title">Smart Pricing & Margins</h3>
+          <p class="feature-text">Set your desired gross margin or markup multiplier. The app recommends retail prices that ensure your bakery stays profitable.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          </div>
+          <h3 class="feature-title">Pantry & Inventory</h3>
+          <p class="feature-text">Keep your ingredient prices up to date. When flour or butter prices rise, all recipes using them automatically update instantly.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <h3 class="feature-title">Nutrition Label Generator</h3>
+          <p class="feature-text">Produce FDA and international style Nutrition Facts panels with calculated Calories, Fats, Sugars, Protein, and allergens ready to print.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <h3 class="feature-title">Shelf Life & Expiry Tracker</h3>
+          <p class="feature-text">Calculate safe best-before and expiration dates automatically based on your recipe ingredients and preservation techniques.</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+              <polyline points="17 21 17 13 7 13 7 21"></polyline>
+              <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+          </div>
+          <h3 class="feature-title">Private & Secure Cloud Backup</h3>
+          <p class="feature-text">Your recipes and secret ratios stay private on your device, with optional automatic synchronization directly to your Apple ID or Google Drive.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Banner -->
+  <div class="container" id="how-it-works">
+    <div class="banner">
+      <div class="banner-content">
+        <h2 class="banner-title">Ready to take control of your bakery margins?</h2>
+        <p class="banner-desc">Download Crust & Cost on iOS or Android today. Start your 7-day free trial and cost your first 5 recipes in under ten minutes.</p>
+        <div class="store-cta-group" style="justify-content: flex-start; margin-bottom: 0;">
+          <a href="https://play.google.com/store/apps/details?id=com.crustandcost.app" class="store-btn" target="_blank" rel="noopener">
+            <svg class="store-btn-icon" viewBox="0 0 24 24"><path d="M3.609 1.814L13.792 12 3.61 22.186a2.41 2.41 0 0 1-.61-.954V2.768c.15-.36.368-.69.61-.954zm11.24 11.24l2.124 2.124-11.7 6.64 9.576-8.764zm0-2.108L5.273 2.182l11.7 6.64-2.124 2.124zm1.488 1.488l2.946-1.672c.983-.558.983-1.468 0-2.026L16.337 9.8l-1.92 1.92 1.92 1.92z"/></svg>
+            <div class="store-btn-text">
+              <div class="store-btn-sub">Get it on</div>
+              <div class="store-btn-main">Google Play</div>
+            </div>
+          </a>
+          <a href="https://apps.apple.com/app/id6817686861" class="store-btn" target="_blank" rel="noopener">
+            <svg class="store-btn-icon" viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.93-2.85-.9.04-1.99.6-2.64 1.35-.57.65-1.07 1.71-.93 2.73 1.01.08 2.03-.5 2.64-1.23z"/></svg>
+            <div class="store-btn-text">
+              <div class="store-btn-sub">Download on the</div>
+              <div class="store-btn-main">App Store</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Got Questions?</div>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-desc">Everything you need to know about Crust & Cost subscriptions, features, and privacy.</p>
+      </div>
+
+      <div class="faq-container">
+        <div class="faq-item">
+          <details>
+            <summary>How does the 7-day free trial work?</summary>
+            <div class="faq-answer">
+              When you download Crust & Cost, you get 7 full days of unrestricted access to all features—including unlimited recipe costing, inventory management, PDF export, and nutrition labels. You can cancel anytime directly in your Apple ID or Google Play account before the 7 days end without being charged.
+            </div>
+          </details>
+        </div>
+
+        <div class="faq-item">
+          <details>
+            <summary>Does the app work without an internet connection?</summary>
+            <div class="faq-answer">
+              Yes! Crust & Cost stores your database directly on your device. You can create recipes, calculate costs, and check your pantry in the middle of a hot kitchen or bakery cellar without needing Wi-Fi or mobile data.
+            </div>
+          </details>
+        </div>
+
+        <div class="faq-item">
+          <details>
+            <summary>Can I convert between Metric and Imperial units?</summary>
+            <div class="faq-answer">
+              Absolutely. Crust & Cost includes built-in conversions between grams, kilograms, milliliters, liters, ounces, pounds, and cups, with density support for dry cup ingredients like flour, cocoa powder, and sugar.
+            </div>
+          </details>
+        </div>
+
+        <div class="faq-item">
+          <details>
+            <summary>Are my secret recipes and client pricing safe?</summary>
+            <div class="faq-answer">
+              Yes, 100%. We never sell, track, or share your proprietary recipes or pricing information. All data is stored on your local device and synced only to your private personal iCloud or Google Drive account.
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-left">
+          <img src="icon.png" alt="Crust & Cost Logo" class="brand-logo" style="width: 36px; height: 36px;">
+          <span class="brand-name" style="font-size: 1.25rem;">Crust <span>&</span> Cost</span>
+        </div>
+        <div class="footer-links">
+          <a href="https://play.google.com/store/apps/details?id=com.crustandcost.app" class="footer-link">Google Play</a>
+          <a href="https://apps.apple.com/app/id6817686861" class="footer-link">App Store</a>
+          <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" class="footer-link" target="_blank" rel="noopener">Terms of Use (EULA)</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2026 Crust & Cost. All rights reserved.</div>
+        <div>Built for bakers with passion & precision.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Smart Device Highlight Script -->
+  <script>
+    (function() {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+      const isAndroid = /android/i.test(userAgent);
+
+      const btnApple = document.getElementById('btn-apple-store');
+      const btnGoogle = document.getElementById('btn-google-play');
+
+      if (isIOS && btnApple) {
+        btnApple.classList.add('highlighted');
+        const badge = document.createElement('div');
+        badge.style.cssText = 'font-size:0.65rem; color:#F4A261; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:2px;';
+        badge.innerText = '★ Recommended for iOS';
+        btnApple.querySelector('.store-btn-text').prepend(badge);
+      } else if (isAndroid && btnGoogle) {
+        btnGoogle.classList.add('highlighted');
+        const badge = document.createElement('div');
+        badge.style.cssText = 'font-size:0.65rem; color:#F4A261; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:2px;';
+        badge.innerText = '★ Recommended for Android';
+        btnGoogle.querySelector('.store-btn-text').prepend(badge);
+      }
+    })();
+  </script>
+</body>
+</html>
