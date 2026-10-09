@@ -537,8 +537,126 @@
       gap: 12px;
     }
 
+    /* App Showcase Section */
+    .showcase-section {
+      background: #FDFBF8;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 36px;
+    }
+
+    .showcase-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+    }
+
+    .showcase-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(156, 66, 33, 0.35);
+    }
+
+    .showcase-media {
+      background: linear-gradient(180deg, #F5ECE6 0%, #EFE3DC 100%);
+      padding: 24px 20px 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .showcase-img {
+      width: 100%;
+      max-width: 440px;
+      height: auto;
+      display: block;
+      border-radius: 14px 14px 0 0;
+      box-shadow: 0 8px 24px rgba(45, 23, 32, 0.12);
+      transition: transform 0.3s ease;
+    }
+
+    .showcase-card:hover .showcase-img {
+      transform: translateY(-4px);
+    }
+
+    .showcase-body {
+      padding: 28px 26px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .showcase-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 12px;
+      align-self: flex-start;
+    }
+
+    .showcase-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+
+    .showcase-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .showcase-points {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.6;
+      margin-top: auto;
+    }
+
+    .showcase-points li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+    }
+
+    .showcase-points li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #2E7D32;
+      font-weight: 800;
+    }
+
     /* Responsive */
     @media (max-width: 900px) {
+      .showcase-grid {
+        grid-template-columns: 1fr;
+      }
       .hero-title {
         font-size: 2.6rem;
       }
@@ -589,6 +707,7 @@
         <span class="brand-name">Crust <span>&</span> Cost</span>
       </a>
       <div class="nav-links">
+        <a href="#showcase" class="nav-link">Screenshots</a>
         <a href="#features" class="nav-link">Features</a>
         <a href="#how-it-works" class="nav-link">How It Works</a>
         <a href="#faq" class="nav-link">FAQ</a>
@@ -655,6 +774,87 @@
           <div class="hero-stat">
             <div class="hero-stat-num">Offline</div>
             <div class="hero-stat-label">Works in Any Kitchen Without Wi-Fi</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- In-Use App Showcase Section -->
+  <section class="section showcase-section" id="showcase">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Inside Crust & Cost</div>
+        <h2 class="section-title">See It in Action</h2>
+        <p class="section-desc">Real, unedited views of the key features designed to save you hours in the bakery and guarantee your profitability.</p>
+      </div>
+
+      <div class="showcase-grid">
+        <!-- Item 1: Costing & Suggested Pricing -->
+        <div class="showcase-card">
+          <div class="showcase-media">
+            <img src="img/preview_costing_pricing.png" alt="Recipe Cost Breakdown and Suggested Pricing" loading="lazy" class="showcase-img">
+          </div>
+          <div class="showcase-body">
+            <span class="showcase-badge">Recipe Costing & Pricing</span>
+            <h3 class="showcase-heading">Instant Cost Breakdown & Suggested Pricing</h3>
+            <p class="showcase-desc">See your exact ingredient cost, labour hourly cost, and total batch cost calculated live per recipe and per single portion. Set your target gross margin (e.g. 60%) to get instant retail selling price recommendations.</p>
+            <ul class="showcase-points">
+              <li><strong>Live Batch Math:</strong> Ingredients, labour, extras & packaging combined</li>
+              <li><strong>Suggested Retail Price:</strong> Never underprice your bakes again</li>
+              <li><strong>Portion Sizing:</strong> Automatically splits total batch costs per unit</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Item 2: Nutrition Facts Label -->
+        <div class="showcase-card">
+          <div class="showcase-media">
+            <img src="img/preview_nutrition_label.png" alt="FDA Compliant Nutrition Facts Label with QR Code" loading="lazy" class="showcase-img">
+          </div>
+          <div class="showcase-body">
+            <span class="showcase-badge">Nutrition & Compliance</span>
+            <h3 class="showcase-heading">FDA & EU Nutrition Facts Labels</h3>
+            <p class="showcase-desc">Generate professional, regulation-compliant nutrition panels in seconds. View per serving, per 100g, or dual-column format with calculated calories, fats, carbs, sodium, and protein.</p>
+            <ul class="showcase-points">
+              <li><strong>Thermal Label Ready:</strong> Set custom print width (40mm to 100mm)</li>
+              <li><strong>Customizable Nutrients:</strong> Toggle specific vitamins and allergens</li>
+              <li><strong>Scannable QR Code:</strong> Direct customer link to online recipe details</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Item 3: Expiry & Shelf Life -->
+        <div class="showcase-card">
+          <div class="showcase-media">
+            <img src="img/preview_shelf_life_expiry.png" alt="Shelf Life & Expiry Date Calculator with Limiting Ingredients" loading="lazy" class="showcase-img">
+          </div>
+          <div class="showcase-body">
+            <span class="showcase-badge">Safety & Shelf Life</span>
+            <h3 class="showcase-heading">Automated Expiry & Best-Before Dates</h3>
+            <p class="showcase-desc">Eliminate guesswork on food safety. The calculator identifies the limiting shelf-life ingredient (like fresh dairy or eggs) and automatically sets compliant batch expiration dates.</p>
+            <ul class="showcase-points">
+              <li><strong>Limiting Ingredient Detection:</strong> Highlights the shortest-lived item automatically</li>
+              <li><strong>Batch Expiry Badge:</strong> Clear days-remaining countdown</li>
+              <li><strong>Export to PDF:</strong> Generate clean certificates for health inspections and retailers</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Item 4: Profit & Margins Analytics -->
+        <div class="showcase-card">
+          <div class="showcase-media">
+            <img src="img/preview_profit_analytics.png" alt="Baking Analytics Gross Margin Donut Chart" loading="lazy" class="showcase-img">
+          </div>
+          <div class="showcase-body">
+            <span class="showcase-badge">Profit Analytics</span>
+            <h3 class="showcase-heading">Clear Financial Distribution & Margins</h3>
+            <p class="showcase-desc">Visualize your financial health with interactive gross margin donut charts. Understand exactly what percentage of every sale goes to ingredients, labour, extras, and your net profit.</p>
+            <ul class="showcase-points">
+              <li><strong>Visual Donut Charts:</strong> Instant breakdown of costs vs. net profits</li>
+              <li><strong>Portfolio Overview:</strong> Track average margins, overall turnover, and profit</li>
+              <li><strong>Multi-Currency:</strong> Automatically formats in ZAR, USD, EUR, GBP, and more</li>
+            </ul>
           </div>
         </div>
       </div>
